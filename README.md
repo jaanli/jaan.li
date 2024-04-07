@@ -132,10 +132,20 @@ docs
 
 Then give more specific instructions with links to Observable Framework / Observable / d3 / Mosaic examples. Example prompts are in the `/prompts` directory.
 
+For example, this seems to help a bit:
+
+```
+proceed step-by-step, as you are a principal software engineer at google. remember that in observable framework markdown files, asynchronous javascript is required and javascript code blocks need "```js" in the preceding line and "```" in the line following the code block.
+```
+
 ## TODO
 - [x] Test GitHub Pages deployment
 - [x] Test Cloudflare Pages deployment
 - [x] Test map example
 - [ ] Modify map example
+  - [x] Custom data
+  - [ ] Custom tooltips
+  - [ ] Custom projection
+  - [ ] Custom chart
 - [ ] Test Google Analytics example
 - [ ] Modify map example

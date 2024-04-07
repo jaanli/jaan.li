@@ -46,9 +46,8 @@
   <a href="https://jaan.io">The old site with all the SEO juice<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
-
 ```js
-import {balancingAuthoritiesMap} from "./components/map.js";
+import {narrativeMap} from "./components/narrativeMap.js";
 ```
 
 ```js
@@ -63,43 +62,35 @@ const biographyData = FileAttachment("data/individual-level-elicited-ethnographi
 
 ```js
 // Map location abbreviations to lat/lon
-const locations = new Map([
-  ["LA", [-118.2437, 34.0522]],
-  ["LosAltos", [-122.0841, 37.4219]],
-  ["Dallas", [-96.7970, 32.7767]],
-  ["NYC", [-74.0060, 40.7128]],
-  ["Princeton", [-74.6702, 40.3431]]
-]);
+const locations = [
+  {id: "LA", lon: -118.2437, lat: 34.0522},
+  {id: "LosAltos", lon: -122.0841, lat: 37.4219},
+  {id: "Dallas", lon: -96.7970, lat: 32.7767},
+  {id: "NYC", lon: -74.0060, lat: 40.7128},
+  {id: "Princeton", lon: -74.6702, lat: 40.3431}
+];
 ```
 
 ```js
 // Configure years ago input
-const yearsAgoInput = Inputs.range([0, 10], {step: 1, value: 0, width: 150});
+const yearsAgoInput = Inputs.range([0, 10], {step: 1, value: 10, width: 150});
 const yearsAgo = Generators.input(yearsAgoInput);
 ```
 
 ```js
 // Most recent year for each location
 const biographyDataAll = d3.range(1950, 1961).map((year) => d3.rollup(biographyData, (d) => d.find(e => e.year === year)?.description, d => d.location));
-const biographyDataCurrent = biographyDataAll[yearsAgo];
-const biographyDataLatest = biographyDataAll[0];
+const biographyDataCurrent = biographyDataAll[10 - yearsAgo];
+const biographyDataLatest = biographyDataAll[10 - yearsAgo];
 ```
 
 ```js
 // Percent change for most recent 2 years of data by location
 const biographyDataChange = d3.rollup(biographyData, (d) => {
-  const current = d.find(e => e.year === 1960 - yearsAgo);
-  const previous = d.find(e => e.year === 1960 - yearsAgo - 1);
+  const current = d.find(e => e.year === 1960 - (10 - yearsAgo));
+  const previous = d.find(e => e.year === 1960 - (10 - yearsAgo) - 1);
   return current && previous ? ((current.description.length - previous.description.length) / previous.description.length) * 100 : 0;
 }, (d) => d.location);
-```
-
-```js
-const biographyDataSpatial = Array.from(locations, ([location, [lon, lat]]) => ({
-  id: location,
-  lon,
-  lat
-}));
 ```
 
 <div style="display: flex; flex-direction: column; align-items: center;">
@@ -111,17 +102,14 @@ const biographyDataSpatial = Array.from(locations, ([location, [lon, lat]]) => (
   </div>
 </div>
 
-${resize((width) => balancingAuthoritiesMap({
-  baHourlyChange: biographyDataChange, 
-  baHourlyLatest: biographyDataLatest,
-  eiaConnRefSpatial: [],
-  eiaPoints: biographyDataSpatial,
-  genOnlyBA: [],
+${resize((width) => narrativeMap({
+  biographyDataChange,
+  biographyDataLatest,
+  locations,
   nation,
   statemesh,
   width
 }))}
-
 
 ---
 
