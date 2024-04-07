@@ -50,14 +50,25 @@ hoursAgoInput.querySelector("input[type=number]").remove();
 ```
 
 ```js
-console.log(hoursAgo);
-```
-
-```js
 // Establish current hour and relative day
 const currentHour = new Date();
 const historicHour = new Date(endHour.getTime() - (hoursBackOfData - hoursAgo) * MS_IN_AN_HOUR);
-const relativeDay = () => historicHour.toDateString() === 0 ? "Today" : "Pre-training phase";
+// const historicHour = new Date(currentHour.getTime() - (hoursBackOfData - hoursAgo) * MS_IN_AN_HOUR);
+console.log(historicHour);
+
+const relativeDay = () => {
+  if (historicHour >= new Date("1990-01-01") && historicHour < new Date("2006-01-01")) {
+    return "Fine-tuning & Deployment";
+  } else if (historicHour >= new Date("2006-01-01") && historicHour < new Date("2008-01-01")) {
+    return "Third Culture Kid Syndrome";
+  } else if (historicHour >= new Date("2008-01-01") && historicHour < new Date("2020-01-01")) {
+    return "Staging";
+  } else if (historicHour >= new Date("2020-01-01") && historicHour < new Date("2030-01-01")) {
+    return "Pre-training";
+  } else {
+    return "Unknown Phase";
+  }
+};
 ```
 
 
@@ -66,11 +77,6 @@ const relativeDay = () => historicHour.toDateString() === 0 ? "Today" : "Pre-tra
 const narrativeDataAll = d3.group(narrativeData, d => d.period);
 // Narrative datapoints up to the selected hour
 const narrativeDataLatest = narrativeData.filter(d => timeParse(d.period) >= historicHour);
-```
-
-```js
-console.log(narrativeDataLatest.filter(d => d.period));
-console.log(historicHour);
 ```
 
 
