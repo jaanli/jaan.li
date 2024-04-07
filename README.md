@@ -59,6 +59,22 @@ A typical Framework project looks like this:
 | `yarn clean`      | Clear the local data loader cache                        |
 | `yarn observable` | Run commands like `observable help`                      |
 
+## Working with secrets and API keys
+
+* Go to repository settings: https://github.com/jaanli/jaan.li/settings/secrets/actions 
+* Click add secret
+* Make sure the YAML configuration for the GitHub Actions deploy script is set up to use the secret
+
+## Deploying to GitHub Pages
+
+* Comment out the Cloudflare secrets in the deploy script
+
+## Using with Cloudflare Pages
+
+Create a Cloudflare API Token: https://dash.cloudflare.com/profile/api-tokens with edit permissions for: `Account.Cloudflare Pages`.
+
+Then add the following secrets to the repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` and make sure they are referenced correctly in the YAML configuration for the GitHub Actions deploy script.
+
 
 ## TODO
 - [ ] Test map example
