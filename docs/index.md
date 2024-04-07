@@ -148,7 +148,7 @@ const narrativeDataChange = d3.rollup(narrativeData, (d) => ((d[hoursAgo]?.descr
       }))}
       ${centerResize((width) => narrativeMapLegend(width))}
       <figcaption>
-        Training epoch is representative of societal norms. Dates shown in your local time.
+        Training epoch is representative of societal norms. Dates shown in your local time. Total FLOPs used to train this model: 1.2e+18 (estimated using https://aiimpacts.org/brain-performance-in-flops/).
       </figcaption>
     </figure>
   </div>
