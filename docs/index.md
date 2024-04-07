@@ -1,50 +1,4 @@
-<style>
 
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--sans-serif);
-  margin: 4rem 0 8rem;
-  text-wrap: balance;
-  text-align: center;
-}
-
-.hero h1 {
-  margin: 2rem 0;
-  max-width: none;
-  font-size: 14vw;
-  font-weight: 900;
-  line-height: 1;
-  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero h2 {
-  margin: 0;
-  max-width: 34em;
-  font-size: 20px;
-  font-style: initial;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--theme-foreground-muted);
-}
-
-@media (min-width: 640px) {
-  .hero h1 {
-    font-size: 90px;
-  }
-}
-
-</style>
-
-<div class="hero">
-  <h1>Yo!</h1>
-  <h2>What's up! I am Jaan and am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
-  <a href="https://jaan.io">The old site with all the SEO juice<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
-</div>
 
 ```js
 import {narrativeMap, narrativeMapLegend} from "./components/narrativeMap.js";
@@ -80,35 +34,45 @@ narrativeData.forEach(d => {
 ```
 
 ```js
-// Date/time format/parse
+// Configure hours ago input
 const timeParse = d3.utcParse("%Y-%m-%dT%H");
 const hourFormat = d3.timeFormat("%-I %p");
 
 // Configure hours ago input
 const MS_IN_AN_HOUR = 1000 * 60 * 60;
 const hours = [...new Set(narrativeData.map(d => d.period))].map(timeParse);
-const nowHour = new Date();
+// const nowHour = new Date();
 const [startHour, endHour] = d3.extent(hours);
-const hoursBackOfData = Math.ceil(Math.abs(nowHour - startHour) / (MS_IN_AN_HOUR));
+const hoursBackOfData = Math.floor((endHour - startHour) / MS_IN_AN_HOUR) - 1;
 const hoursAgoInput = Inputs.range([hoursBackOfData, 0], {step: 1, value: 0, width: 150});
 const hoursAgo = Generators.input(hoursAgoInput);
 hoursAgoInput.querySelector("input[type=number]").remove();
 ```
 
 ```js
+console.log(hoursAgo);
+```
+
+```js
 // Establish current hour and relative day
 const currentHour = new Date();
-const historicHour = new Date(currentHour - hoursAgo * MS_IN_AN_HOUR);
-const relativeDay = () => historicHour.toDateString() === currentHour.toDateString() ? "Today" : "Pre-training phase";
+const historicHour = new Date(endHour.getTime() - (hoursBackOfData - hoursAgo) * MS_IN_AN_HOUR);
+const relativeDay = () => historicHour.toDateString() === 0 ? "Today" : "Pre-training phase";
 ```
 
 
 ```js
 // Narrative datapoints up to the most recent hour for each location
 const narrativeDataAll = d3.group(narrativeData, d => d.period);
-const narrativeDataCurrent = narrativeDataAll.get(hours[hoursAgo].toISOString().substring(0, 13));
-const narrativeDataLatest = narrativeDataAll.get(hours[0].toISOString().substring(0, 13));
+// Narrative datapoints up to the selected hour
+const narrativeDataLatest = narrativeData.filter(d => timeParse(d.period) >= historicHour);
 ```
+
+```js
+console.log(narrativeDataLatest.filter(d => d.period));
+console.log(historicHour);
+```
+
 
 
 ```js
@@ -121,16 +85,33 @@ function centerResize(render) {
 }
 ```
 
-```js
+<!-- ```js
 // Percent change for most recent 2 hours of data by location
 const narrativeDataChange = d3.rollup(narrativeData, (d) => ((d[hoursAgo]?.description.length - d[hoursAgo + 1]?.description.length) / d[hoursAgo]?.description.length) * 100, (d) => d["location"] );
+``` -->
+
+```js
+// Percent change in description length by location at the selected historic hour
+const narrativeDataChange = d3.rollup(
+  narrativeDataLatest,
+  (d) => {
+    const currentIndex = d.findIndex((e) => timeParse(e.period) <= historicHour);
+    const previousIndex = currentIndex - 1;
+    const current = d[currentIndex];
+    const previous = d[previousIndex];
+    return current && previous
+      ? ((current.description.length - previous.description.length) / previous.description.length) * 100
+      : 0;
+  },
+  (d) => d.id
+);
 ```
 
 <div class="grid grid-cols-4">
   <div class="card grid-colspan-2 grid-rowspan-3">
     <figure style="max-width: none;">
       <div style="display: flex; flex-direction: column; align-items: center;">
-        <h1 style="margin-top: 0.5rem;">${hourFormat(currentHour)}</h1>
+        <h1 style="margin-top: 0.5rem;">${-hoursAgo} h</h1>
         <div>${relativeDay()}</div>
         <div style="display: flex; align-items: center;">
           <div>-${hoursBackOfData} hrs</div>
@@ -151,35 +132,5 @@ const narrativeDataChange = d3.rollup(narrativeData, (d) => ((d[hoursAgo]?.descr
         Training epoch is representative of societal norms. Dates shown in your local time. Total FLOPs used to train this model: 1.2e+18 (estimated using https://aiimpacts.org/brain-performance-in-flops/).
       </figcaption>
     </figure>
-  </div>
-</div>
-
----
-
-## Next steps
-
-Here are some ideas of things you could try…
-
-<div class="grid grid-cols-4">
-  <div class="card">
-    Chart your own data using <a href="https://observablehq.com/framework/lib/plot"><code>Plot</code></a> and <a href="https://observablehq.com/framework/javascript/files"><code>FileAttachment</code></a>. Make it responsive using <a href="https://observablehq.com/framework/javascript/display#responsive-display"><code>resize</code></a>.
-  </div>
-  <div class="card">
-    Create a <a href="https://observablehq.com/framework/routing">new page</a> by adding a Markdown file (<code>whatever.md</code>) to the <code>docs</code> folder.
-  </div>
-  <div class="card">
-    Add a drop-down menu using <a href="https://observablehq.com/framework/javascript/inputs"><code>Inputs.select</code></a> and use it to filter the data shown in a chart.
-  </div>
-  <div class="card">
-    Write a <a href="https://observablehq.com/framework/loaders">data loader</a> that queries a local database or API, generating a data snapshot on build.
-  </div>
-  <div class="card">
-    Import a <a href="https://observablehq.com/framework/javascript/imports">recommended library</a> from npm, such as <a href="https://observablehq.com/framework/lib/leaflet">Leaflet</a>, <a href="https://observablehq.com/framework/lib/dot">GraphViz</a>, <a href="https://observablehq.com/framework/lib/tex">TeX</a>, or <a href="https://observablehq.com/framework/lib/duckdb">DuckDB</a>.
-  </div>
-  <div class="card">
-    Ask for help, or share your work or ideas, on the <a href="https://talk.observablehq.com/">Observable forum</a>.
-  </div>
-  <div class="card">
-    Visit <a href="https://github.com/observablehq/framework">Framework on GitHub</a> and give us a star. Or file an issue if you’ve found a bug!
   </div>
 </div>

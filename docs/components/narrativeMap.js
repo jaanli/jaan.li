@@ -17,7 +17,6 @@ const color = Plot.scale({
 export function narrativeMap({
   narrativeDataChange,
   narrativeDataLatest,
-  narrativeData,
   nation,
   statemesh,
   width
@@ -41,13 +40,12 @@ export function narrativeMap({
       Plot.geo(nation, { fill: "currentColor", fillOpacity: 0.1, stroke: "var(--theme-background-alt)" }),
       Plot.geo(statemesh, { stroke: "var(--theme-background-alt)", strokeWidth: 0.8 }),
       Plot.dot(narrativeDataLatest || [], {
-        filter: (d) => isNaN(narrativeDataChange.get(d.id)),
         x: (d) => d.location.lon,
         y: (d) => d.location.lat,
         r: (d) => d.radius,
         stroke: "gray",
         strokeWidth: 1,
-        fill: colorGenerating
+        fill: (d) => colorGenerating
       }),
       Plot.text(narrativeDataLatest || [], {
         x: (d) => d.location.lon,
@@ -62,12 +60,14 @@ export function narrativeMap({
           x: (d) => d.location.lon,
           y: (d) => d.location.lat,
           title: (d) =>
-            `${d.id}\nChange from previous hour: ${isNaN(narrativeDataChange.get(d.id)) ? "Unavailable" : narrativeDataChange.get(d.id).toFixed(1) + "%"
-            }\nLatest description: ${d.description || "Unavailable"
+            `${d.id}\nChange from previous hour: ${
+              isNaN(narrativeDataChange.get(d.id)) ? "Unavailable" : narrativeDataChange.get(d.id).toFixed(1) + "%"
+            }\nLatest description: ${
+              d.description || "Unavailable"
             }`
         })
       ),
-      Plot.text(narrativeData, {
+      Plot.text(narrativeDataLatest, {
         x: (d) => d.location[0],
         y: (d) => d.location[1],
         text: (d) => (d.radius > 1 ? d.period : null),
@@ -75,7 +75,7 @@ export function narrativeMap({
         fill: "black"
       }),
       Plot.tip(
-        narrativeData,
+        narrativeDataLatest,
         Plot.pointer({
           x: (d) => d.location[0],
           y: (d) => d.location[1],
