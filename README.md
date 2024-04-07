@@ -146,6 +146,7 @@ proceed step-by-step, as you are a principal software engineer at google. rememb
   - [x] Custom data
   - [ ] Custom tooltips
   - [ ] Custom projection
+  - [ ] Custom sampling - `filter` in the map.js example
   - [ ] Custom chart
 - [ ] Test Google Analytics example
 - [ ] Modify map example

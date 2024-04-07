@@ -47,7 +47,7 @@
 </div>
 
 ```js
-import {narrativeMap} from "./components/narrativeMap.js";
+import {narrativeMap, narrativeMapLegend} from "./components/narrativeMap.js";
 ```
 
 ```js
@@ -57,59 +57,102 @@ const statemesh = us.features.find(({id}) => id === "statemesh");
 ```
 
 ```js
-const biographyData = FileAttachment("data/individual-level-elicited-ethnographic-narrative-data.csv").csv({typed: true});
+// Load qualitative narrative data snapshots
+const narrativeData = FileAttachment("data/individual-level-elicited-ethnographic-narrative-data.csv").csv({typed: true});
 ```
 
 ```js
-// Map location abbreviations to lat/lon
-const locations = [
-  {id: "LA", lon: -118.2437, lat: 34.0522},
-  {id: "LosAltos", lon: -122.0841, lat: 37.4219},
-  {id: "Dallas", lon: -96.7970, lat: 32.7767},
-  {id: "NYC", lon: -74.0060, lat: 40.7128},
-  {id: "Princeton", lon: -74.6702, lat: 40.3431}
-];
+// Map location places to lat/lon
+const places = {
+  "LAX": {lon: -118.2437, lat: 34.0522, "radius": 10},
+  "GOOG": {lon: -122.0841, lat: 37.4219, "radius": 20},
+  "DFW": {lon: -96.7970, lat: 32.7767, "radius": 40},
+  "NYC": {lon: -74.0060, lat: 40.7128, "radius": 5},
+  "PTON": {lon: -74.6702, lat: 40.3431, "radius": 23}
+};
 ```
 
 ```js
-// Configure years ago input
-const yearsAgoInput = Inputs.range([0, 10], {step: 1, value: 10, width: 150});
-const yearsAgo = Generators.input(yearsAgoInput);
+// Map individual narrativeData to locations object with lat and lon
+narrativeData.forEach(d => {
+  d.location = places[d.id];
+});
 ```
 
 ```js
-// Most recent year for each location
-const biographyDataAll = d3.range(1950, 1961).map((year) => d3.rollup(biographyData, (d) => d.find(e => e.year === year)?.description, d => d.location));
-const biographyDataCurrent = biographyDataAll[10 - yearsAgo];
-const biographyDataLatest = biographyDataAll[10 - yearsAgo];
+// Date/time format/parse
+const timeParse = d3.utcParse("%Y-%m-%dT%H");
+const hourFormat = d3.timeFormat("%-I %p");
+
+// Configure hours ago input
+const MS_IN_AN_HOUR = 1000 * 60 * 60;
+const hours = [...new Set(narrativeData.map(d => d.period))].map(timeParse);
+const nowHour = new Date();
+const [startHour, endHour] = d3.extent(hours);
+const hoursBackOfData = Math.ceil(Math.abs(nowHour - startHour) / (MS_IN_AN_HOUR));
+const hoursAgoInput = Inputs.range([hoursBackOfData, 0], {step: 1, value: 0, width: 150});
+const hoursAgo = Generators.input(hoursAgoInput);
+hoursAgoInput.querySelector("input[type=number]").remove();
 ```
 
 ```js
-// Percent change for most recent 2 years of data by location
-const biographyDataChange = d3.rollup(biographyData, (d) => {
-  const current = d.find(e => e.year === 1960 - (10 - yearsAgo));
-  const previous = d.find(e => e.year === 1960 - (10 - yearsAgo) - 1);
-  return current && previous ? ((current.description.length - previous.description.length) / previous.description.length) * 100 : 0;
-}, (d) => d.location);
+// Establish current hour and relative day
+const currentHour = new Date();
+const historicHour = new Date(currentHour - hoursAgo * MS_IN_AN_HOUR);
+const relativeDay = () => historicHour.toDateString() === currentHour.toDateString() ? "Today" : "Pre-training phase";
 ```
 
-<div style="display: flex; flex-direction: column; align-items: center;">
-  <h3 style="margin-top: 0.5rem;">Training Epoch:</h3>
-  <div style="display: flex; align-items: center;">
-    <div>1950</div>
-    ${yearsAgoInput}
-    <div style="padding-left: 0.5rem;">1960</div>
+
+```js
+// Narrative datapoints up to the most recent hour for each location
+const narrativeDataAll = d3.group(narrativeData, d => d.period);
+const narrativeDataCurrent = narrativeDataAll.get(hours[hoursAgo].toISOString().substring(0, 13));
+const narrativeDataLatest = narrativeDataAll.get(hours[0].toISOString().substring(0, 13));
+```
+
+
+```js
+function centerResize(render) {
+  const div = resize(render);
+  div.style.display = "flex";
+  div.style.flexDirection = "column";
+  div.style.alignItems = "center";
+  return div;
+}
+```
+
+```js
+// Percent change for most recent 2 hours of data by location
+const narrativeDataChange = d3.rollup(narrativeData, (d) => ((d[hoursAgo]?.description.length - d[hoursAgo + 1]?.description.length) / d[hoursAgo]?.description.length) * 100, (d) => d["location"] );
+```
+
+<div class="grid grid-cols-4">
+  <div class="card grid-colspan-2 grid-rowspan-3">
+    <figure style="max-width: none;">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1 style="margin-top: 0.5rem;">${hourFormat(currentHour)}</h1>
+        <div>${relativeDay()}</div>
+        <div style="display: flex; align-items: center;">
+          <div>-${hoursBackOfData} hrs</div>
+          ${hoursAgoInput}
+          <div style="padding-left: 0.5rem;">now</div>
+        </div>
+      </div>
+      ${centerResize((width) => narrativeMap({
+        narrativeDataChange,
+        narrativeDataLatest,
+        narrativeData,
+        nation,
+        statemesh,
+        width
+      }))}
+      ${centerResize((width) => narrativeMapLegend(width))}
+      <figcaption>
+        Training epoch is representative of societal norms. Dates shown in your local time.
+      </figcaption>
+    </figure>
   </div>
 </div>
-
-${resize((width) => narrativeMap({
-  biographyDataChange,
-  biographyDataLatest,
-  locations,
-  nation,
-  statemesh,
-  width
-}))}
 
 ---
 
