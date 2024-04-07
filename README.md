@@ -96,6 +96,8 @@ Then make sure the GitHub Actions deploy script YAML configuration includes the 
 
 
 ## TODO
+- [x] Test GitHub Pages deployment
+- [ ] Test Cloudflare Pages deployment
 - [ ] Test map example
 - [ ] Test Google Analytics example
 - [ ] Modify map example
