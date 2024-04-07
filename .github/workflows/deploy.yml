@@ -82,16 +82,16 @@ jobs:
           path: dist
           # Specify the path to your build directory
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
-        if: github.ref == 'refs/heads/main'
-      # - uses: cloudflare/pages-action@1
-      #   with:
-      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      #     accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      #     projectName: framework
-      #     directory: dist
-      #     gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Deploy to GitHub Pages
+      #   uses: actions/deploy-pages@v1
+      #   if: github.ref == 'refs/heads/main'
+      - uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: framework
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       # TODO: This doesn't include the examples. How can we fix that?
       # TODO: Re-enable deploy to Observable
       # - name: Deploy to Observable

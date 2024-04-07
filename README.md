@@ -67,13 +67,26 @@ A typical Framework project looks like this:
 
 ## Deploying to GitHub Pages
 
-* Comment out the Cloudflare secrets in the deploy script
+* Comment out the Cloudflare secrets in the deploy script.
+* Make sure the GitHub Actions deploy script YAML configuration includes the following:
+```
+       - name: Deploy to GitHub Pages
+         uses: actions/deploy-pages@v1
+         if: github.ref == 'refs/heads/main'
+``` 
 
 ## Using with Cloudflare Pages
 
 Create a Cloudflare API Token: https://dash.cloudflare.com/profile/api-tokens with edit permissions for: `Account.Cloudflare Pages`.
 
 Then add the following secrets to the repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` and make sure they are referenced correctly in the YAML configuration for the GitHub Actions deploy script.
+
+Then make sure the GitHub Actions deploy script YAML configuration includes the following:
+```
+       - name: Deploy to Cloudflare Pages
+         uses: cloudflare/deploy-pages-action@v2
+         if: github.ref == 'refs/heads/main'
+```
 
 
 ## TODO
