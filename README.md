@@ -81,11 +81,17 @@ Create a Cloudflare API Token: https://dash.cloudflare.com/profile/api-tokens wi
 
 Then add the following secrets to the repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` and make sure they are referenced correctly in the YAML configuration for the GitHub Actions deploy script.
 
+Then go to Cloudflare Pages, create a new Page, connect it to the `.git` repository using your GitHub account, and note the name of the project for below.
+
 Then make sure the GitHub Actions deploy script YAML configuration includes the following:
 ```
-       - name: Deploy to Cloudflare Pages
-         uses: cloudflare/deploy-pages-action@v2
-         if: github.ref == 'refs/heads/main'
+      - uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: jaan.li
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 
