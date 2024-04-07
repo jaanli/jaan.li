@@ -1,5 +1,11 @@
 # jaan.li
 
+Created using:
+
+```
+yarn create @observablehq
+```
+
 This is an [Observable Framework](https://observablehq.com/framework) project. To start the local preview server, run:
 
 ```
