@@ -130,9 +130,12 @@ docs
 3 directories, 19 files
 ```
 
+Then give more specific instructions with links to Observable Framework / Observable / d3 / Mosaic examples. Example prompts are in the `/prompts` directory.
+
 ## TODO
 - [x] Test GitHub Pages deployment
-- [ ] Test Cloudflare Pages deployment
-- [ ] Test map example
+- [x] Test Cloudflare Pages deployment
+- [x] Test map example
+- [ ] Modify map example
 - [ ] Test Google Analytics example
 - [ ] Modify map example
