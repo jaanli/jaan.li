@@ -34,6 +34,8 @@ jobs:
       - if: steps.cache-data.outputs.cache-hit == 'true'
         run: find docs/.observablehq/cache -type f -exec touch {} +
       - run: yarn build
+        env:
+          EIA_KEY: ${{ secrets.EIA_KEY }}
       # - name: Build example "api"
       #   run: yarn --frozen-lockfile && yarn build
       #   working-directory: examples/api
