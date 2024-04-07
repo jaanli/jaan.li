@@ -12,6 +12,7 @@ This is an [Observable Framework](https://observablehq.com/framework) project. T
 yarn dev
 ```
 
+
 Then visit <http://localhost:3000> to preview your project.
 
 For more, see <https://observablehq.com/framework/getting-started>.
@@ -57,3 +58,9 @@ A typical Framework project looks like this:
 | `yarn deploy`     | Deploy your project to Observable                        |
 | `yarn clean`      | Clear the local data loader cache                        |
 | `yarn observable` | Run commands like `observable help`                      |
+
+
+## TODO
+- [ ] Test map example
+- [ ] Test Google Analytics example
+- [ ] Modify map example
