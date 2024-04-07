@@ -1,7 +1,3 @@
----
-toc: false
----
-
 <style>
 
 .hero {
@@ -45,44 +41,87 @@ toc: false
 </style>
 
 <div class="hero">
-  <h1>Hello, Observable Framework</h1>
-  <h2>Welcome to your new project! Edit&nbsp;<code style="font-size: 90%;">docs/index.md</code> to change this page.</h2>
-  <a href="https://observablehq.com/framework/getting-started">Get started<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
+  <h1>Yo!</h1>
+  <h2>What's up! I am Jaan and am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
+  <a href="https://jaan.io">The old site with all the SEO juice<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
-<div class="grid grid-cols-2" style="grid-auto-rows: 504px;">
-  <div class="card">${
-    resize((width) => Plot.plot({
-      title: "Your awesomeness over time 🚀",
-      subtitle: "Up and to the right!",
-      width,
-      y: {grid: true, label: "Awesomeness"},
-      marks: [
-        Plot.ruleY([0]),
-        Plot.lineY(aapl, {x: "Date", y: "Close", tip: true})
-      ]
-    }))
-  }</div>
-  <div class="card">${
-    resize((width) => Plot.plot({
-      title: "How big are penguins, anyway? 🐧",
-      width,
-      grid: true,
-      x: {label: "Body mass (g)"},
-      y: {label: "Flipper length (mm)"},
-      color: {legend: true},
-      marks: [
-        Plot.linearRegressionY(penguins, {x: "body_mass_g", y: "flipper_length_mm", stroke: "species"}),
-        Plot.dot(penguins, {x: "body_mass_g", y: "flipper_length_mm", stroke: "species", tip: true})
-      ]
-    }))
-  }</div>
-</div>
 
 ```js
-const aapl = FileAttachment("aapl.csv").csv({typed: true});
-const penguins = FileAttachment("penguins.csv").csv({typed: true});
+import {balancingAuthoritiesMap} from "./components/map.js";
 ```
+
+```js
+const us = await FileAttachment("data/us-states.json").json();
+const nation = us.features.find(({id}) => id === "nation");
+const statemesh = us.features.find(({id}) => id === "statemesh");
+```
+
+```js
+const biographyData = FileAttachment("data/individual-level-elicited-ethnographic-narrative-data.csv").csv({typed: true});
+```
+
+```js
+// Map location abbreviations to lat/lon
+const locations = new Map([
+  ["LA", [-118.2437, 34.0522]],
+  ["LosAltos", [-122.0841, 37.4219]],
+  ["Dallas", [-96.7970, 32.7767]],
+  ["NYC", [-74.0060, 40.7128]],
+  ["Princeton", [-74.6702, 40.3431]]
+]);
+```
+
+```js
+// Configure years ago input
+const yearsAgoInput = Inputs.range([0, 10], {step: 1, value: 0, width: 150});
+const yearsAgo = Generators.input(yearsAgoInput);
+```
+
+```js
+// Most recent year for each location
+const biographyDataAll = d3.range(1950, 1961).map((year) => d3.rollup(biographyData, (d) => d.find(e => e.year === year)?.description, d => d.location));
+const biographyDataCurrent = biographyDataAll[yearsAgo];
+const biographyDataLatest = biographyDataAll[0];
+```
+
+```js
+// Percent change for most recent 2 years of data by location
+const biographyDataChange = d3.rollup(biographyData, (d) => {
+  const current = d.find(e => e.year === 1960 - yearsAgo);
+  const previous = d.find(e => e.year === 1960 - yearsAgo - 1);
+  return current && previous ? ((current.description.length - previous.description.length) / previous.description.length) * 100 : 0;
+}, (d) => d.location);
+```
+
+```js
+const biographyDataSpatial = Array.from(locations, ([location, [lon, lat]]) => ({
+  id: location,
+  lon,
+  lat
+}));
+```
+
+<div style="display: flex; flex-direction: column; align-items: center;">
+  <h3 style="margin-top: 0.5rem;">Training Epoch:</h3>
+  <div style="display: flex; align-items: center;">
+    <div>1950</div>
+    ${yearsAgoInput}
+    <div style="padding-left: 0.5rem;">1960</div>
+  </div>
+</div>
+
+${resize((width) => balancingAuthoritiesMap({
+  baHourlyChange: biographyDataChange, 
+  baHourlyLatest: biographyDataLatest,
+  eiaConnRefSpatial: [],
+  eiaPoints: biographyDataSpatial,
+  genOnlyBA: [],
+  nation,
+  statemesh,
+  width
+}))}
+
 
 ---
 

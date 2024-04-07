@@ -96,6 +96,39 @@ Then make sure the GitHub Actions deploy script YAML configuration includes the 
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+## Editing with Claude & GPT-4
+
+Constructing a prompt requires giving these large language models context. Use an app like Maccy (https://maccy.app) or Alfred (https://www.alfredapp.com) to store and retrieve your clipboard history using their keyboard shortcuts.
+
+Start with copy and pasting the file tree for `docs` (use homebrew to install `tree` if you don't have it installed):
+
+```
+❯ tree --dirsfirst docs 
+docs
+├── components
+│   ├── charts.js
+│   ├── map.js
+│   └── timeline.js
+├── data
+│   ├── country-interchange.csv.js
+│   ├── eia-ba-hourly.csv.js
+│   ├── eia-bia-reference.csv
+│   ├── eia-connections-reference.csv
+│   ├── eia-system-points.json.sh
+│   ├── events.json
+│   ├── launches.csv.js
+│   ├── us-counties-10m.json
+│   ├── us-demand.csv.js
+│   └── us-states.json.js
+├── aapl.csv
+├── eia.md
+├── example-dashboard.md
+├── example-report.md
+├── index.md
+└── penguins.csv
+
+3 directories, 19 files
+```
 
 ## TODO
 - [x] Test GitHub Pages deployment
