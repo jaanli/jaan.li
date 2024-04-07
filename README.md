@@ -77,11 +77,13 @@ A typical Framework project looks like this:
 
 ## Using with Cloudflare Pages
 
+Cloudflare Pages gives free analytics and a global content delivery network for free, along with goodies like image resizing and free bandwidth.
+
 Create a Cloudflare API Token: https://dash.cloudflare.com/profile/api-tokens with edit permissions for: `Account.Cloudflare Pages`.
 
 Then add the following secrets to the repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` and make sure they are referenced correctly in the YAML configuration for the GitHub Actions deploy script.
 
-Then go to Cloudflare Pages, create a new Page, connect it to the `.git` repository using your GitHub account, and note the name of the project for below.
+Then go to Cloudflare Pages, create a new Page, connect it to the `.git` repository using your GitHub account, and note the name of the project for below, in this case https://jaan-li.pages.dev.
 
 Then make sure the GitHub Actions deploy script YAML configuration includes the following:
 ```
