@@ -186,3 +186,5 @@ const narrativeDataChange = d3.rollup(
     </figure>
   </div>
 </div>
+
+<a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a>
