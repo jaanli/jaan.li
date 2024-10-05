@@ -41,7 +41,7 @@
 </style>
 
 <div class="hero">
-  <h1>Yo!</h1>
+  <h1>About Jaan</h1>
   <h2>I am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
   <a href="https://jaan.io">The old site with all the SEO juice<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
@@ -187,4 +187,11 @@ const narrativeDataChange = d3.rollup(
   </div>
 </div>
 
-<a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a>
+Built with love and the support of my wife in the City of New York. 
+
+<!-- <a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a> -->
+
+Subscribe to my newsletter for updates on my work and writing by emailing <a href="mailto:subscribe@jaan.li">subscribe@jaan.li</a> (contents can be anything, especially things you are interested in :).
+
+You can also follow me on Twitter at <a href="https://x.com/thejaan">@thejaan</a> and on Instagram at <a href="https://instagram.com/big.baby.energy">@big.baby.energy</a>.
+
