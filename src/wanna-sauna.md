@@ -42,7 +42,7 @@
 
 <div class="hero">
   <h1>Wanna Sauna?</h1>
-  <h2>Saunas are inaccessible. Here's how to get one for your home, workplace, and city :)</h2>
+  <h2>Saunas are inaccessible; here's how to get one for your home, workplace, and city :)</h2>
   <a href="https://saunalist.org">saunalist.org has global sauna listings too!<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
