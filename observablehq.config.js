@@ -12,6 +12,12 @@ export default {
       pages: [
         {name: "Wanna Sauna?", path: "/wanna-sauna"},
       ]
+    },
+    {
+      name: "Art",
+      pages: [
+        {name: "Modern Tarot", path: "/modern-tarot"}
+      ]
     }
   ],
 
