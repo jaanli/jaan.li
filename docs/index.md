@@ -42,7 +42,7 @@
 
 <div class="hero">
   <h1>Yo!</h1>
-  <h2>What's up! I am Jaan and am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
+  <h2>I am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
   <a href="https://jaan.io">The old site with all the SEO juice<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
