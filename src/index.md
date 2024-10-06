@@ -189,7 +189,7 @@ const narrativeDataChange = d3.rollup(
 
 Built with love and the support of my wife in the City of New York. 
 
-<!-- <a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a> -->
+<!-- <a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a>   -->
 
 Subscribe to my newsletter for updates on my work and writing by emailing <a href="mailto:subscribe@jaan.li">subscribe@jaan.li</a> (contents can be anything, especially things you are interested in :).
 
