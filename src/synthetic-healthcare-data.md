@@ -46,7 +46,7 @@ toc: false
 
 <div class="hero">
   <h1>Synthetic Healthcare Data</h1>
-  <h2>Welcome to nonprofit research into healthcare thanks to the Agency for Healthcare Research and Quality in the United States' Department of Health and Human Services!</h2>
+  <h2>I made this visualization thanks to the Agency for Healthcare Research and Quality in the United States' Department of Health and Human Services.</h2>
   <a href="https://www.ahrq.gov/sites/default/files/wysiwyg/data/SyH-DR-Codebook.pdf">Learn more about variables in the data<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
