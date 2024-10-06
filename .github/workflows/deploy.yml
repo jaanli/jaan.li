@@ -22,6 +22,7 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: |
             yarn.lock
+            'examples/*/yarn.lock'
       - run: yarn --frozen-lockfile
       - id: date
         run: echo "date=$(TZ=America/Los_Angeles date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
@@ -30,12 +31,11 @@ jobs:
         with:
           path: |
             docs/.observablehq/cache
-          key: data-${{ hashFiles('docs/data/*') }}-${{ steps.date.outputs.date }}
+            examples/*/docs/.observablehq/cache
+          key: data-${{ hashFiles('docs/data/*', 'examples/*/docs/data/*') }}-${{ steps.date.outputs.date }}
       - if: steps.cache-data.outputs.cache-hit == 'true'
-        run: find docs/.observablehq/cache -type f -exec touch {} +
+        run: find docs/.observablehq/cache examples/*/docs/.observablehq/cache -type f -exec touch {} +
       - run: yarn build
-        env:
-          EIA_KEY: ${{ secrets.EIA_KEY }}
       # - name: Build example "api"
       #   run: yarn --frozen-lockfile && yarn build
       #   working-directory: examples/api
@@ -82,16 +82,16 @@ jobs:
           path: dist
           # Specify the path to your build directory
 
-      # - name: Deploy to GitHub Pages
-      #   uses: actions/deploy-pages@v1
-      #   if: github.ref == 'refs/heads/main'
-      - uses: cloudflare/pages-action@1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: jaan-li
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+        if: github.ref == 'refs/heads/main'
+      # - uses: cloudflare/pages-action@1
+      #   with:
+      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      #     projectName: framework
+      #     directory: dist
+      #     gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       # TODO: This doesn't include the examples. How can we fix that?
       # TODO: Re-enable deploy to Observable
       # - name: Deploy to Observable
