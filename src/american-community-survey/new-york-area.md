@@ -8,7 +8,25 @@ const db = DuckDBClient.of({data: FileAttachment("data/income-histogram-historic
 ```
 
 ```js
-const uniqueYears = await db.query("SELECT DISTINCT year FROM data WHERE year BETWEEN 2005 AND 2022 ORDER BY year").then(data => data.map(d => d.year));
+// const uniqueYears = await db.query("SELECT DISTINCT year FROM data WHERE year BETWEEN 2005 AND 2022 ORDER BY year").then(data => data.map(d => d.year));
+const uniqueYears = await db.query("SELECT DISTINCT year FROM data ORDER BY year")
+  .then(result => {
+    console.log('Query result:', result);
+    if (!result.batches || !result.batches[0] || !result.batches[0].data) {
+      console.error('Unexpected result structure:', result);
+      return [];
+    }
+    const yearColumn = result.batches[0].data.children[0].values;
+    if (!(yearColumn instanceof Int32Array)) {
+      console.error('Year column is not an Int32Array:', yearColumn);
+      return [];
+    }
+    return Array.from(yearColumn); // Convert Int32Array to regular array
+  })
+  .catch(error => {
+    console.error('Query error:', error);
+    return [];
+  });
 const yearRange = [uniqueYears[0], uniqueYears[uniqueYears.length - 1]];
 const yearInput = Inputs.range(yearRange, {
   step: 1,
@@ -32,14 +50,29 @@ const stateCodeToName = {
 };
 
 // Fetch PUMA details, including state names based on the hardcoded map
+// const pumaDetails = await db.query(`
+//   SELECT DISTINCT puma, puma_name, state_code
+//   FROM data
+// `).then(data => data.map(d => ({
+//   puma: d.puma,
+//   stateCode: d.state_code,
+//   label: `${stateCodeToName[d.state_code]} - ${d.puma_name.replace("PUMA", "").trim()}`
+// })));
 const pumaDetails = await db.query(`
   SELECT DISTINCT puma, puma_name, state_code
   FROM data
-`).then(data => data.map(d => ({
-  puma: d.puma,
-  stateCode: d.state_code,
-  label: `${stateCodeToName[d.state_code]} - ${d.puma_name.replace("PUMA", "").trim()}`
-})));
+`).then(result => {
+  if (!result.batches?.[0]?.data) return [];
+  const data = result.batches[0].data;
+  return Array.from({length: data.length}, (_, i) => ({
+    puma: String.fromCharCode(...data.children[0].values.slice(data.children[0].valueOffsets[i], data.children[0].valueOffsets[i+1])),
+    stateCode: String.fromCharCode(...data.children[2].values.slice(data.children[2].valueOffsets[i], data.children[2].valueOffsets[i+1])),
+    label: `${stateCodeToName[String.fromCharCode(...data.children[2].values.slice(data.children[2].valueOffsets[i], data.children[2].valueOffsets[i+1]))]} - ${String.fromCharCode(...data.children[1].values.slice(data.children[1].valueOffsets[i], data.children[1].valueOffsets[i+1])).replace("PUMA", "").trim()}`
+  }));
+}).catch(error => {
+  console.error('PUMA query error:', error);
+  return [];
+});
 
 console.log("PUMA Details:", pumaDetails);
 
@@ -67,13 +100,32 @@ const selectedStateCode = selectedPUMADetails.stateCode;
 
 ```js
 const mostRecentYear = uniqueYears[uniqueYears.length - 1];
+// const orderSectors = await db.query(`
+//   SELECT sector, SUM(income * count) / SUM(count) AS mean_income
+//   FROM data
+//   WHERE year = ${mostRecentYear}
+//   GROUP BY sector
+//   ORDER BY mean_income DESC
+// `).then(data => data.map(d => d.sector));
 const orderSectors = await db.query(`
   SELECT sector, SUM(income * count) / SUM(count) AS mean_income
   FROM data
   WHERE year = ${mostRecentYear}
   GROUP BY sector
   ORDER BY mean_income DESC
-`).then(data => data.map(d => d.sector));
+`).then(result => {
+  if (!result.batches?.[0]?.data) return [];
+  const data = result.batches[0].data;
+  return Array.from({length: data.length}, (_, i) => 
+    String.fromCharCode(...data.children[0].values.slice(
+      data.children[0].valueOffsets[i],
+      data.children[0].valueOffsets[i+1]
+    ))
+  );
+}).catch(error => {
+  console.error('Order sectors query error:', error);
+  return [];
+});
 ```
 
 ```js
