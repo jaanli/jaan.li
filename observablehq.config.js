@@ -16,7 +16,8 @@ export default {
     {
       name: "Visualizations",
       pages: [
-        {name: "Healthcare data of 1.2M people", path: "/synthetic-healthcare-data"}
+        {name: "Healthcare data of 1.2M people", path: "/synthetic-healthcare-data"},
+        {name: "850k properties in New York real estate", path: "/new-york-real-estate"}
       ]
     },
     {

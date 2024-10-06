@@ -1,5 +1,6 @@
 ---
-toc: false
+toc: true
+title: Synthetic Healthcare Data Visualization
 ---
 
 <style>
