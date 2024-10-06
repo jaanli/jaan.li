@@ -16,7 +16,7 @@ export default {
     {
       name: "Visualizations",
       pages: [
-        {name: "Healthcare data 1.2M people", path: "/synthetic-healthcare-data"}
+        {name: "Healthcare data of 1.2M people", path: "/synthetic-healthcare-data"}
       ]
     },
     {
