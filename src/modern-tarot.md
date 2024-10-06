@@ -8,7 +8,7 @@ Pair with audio from Guided Dystopia, a guided meditation series I made a few ye
 
 ![Modern Tarot](/images/modern-tarot/jaan_17546_Tarot_card_Josh_drives_U-Haul_fleeing_gentrified_n_bd482e93-a4f6-40a7-b887-aa2548e4997d_0.png)
 
-I thin used a pen plotter (computer numerical control tool that draws with a pen) to draw the tarot card:
+I then used a pen plotter (computer numerical control tool that draws with a pen) to draw the tarot card:
 
 ![Pen plotter](/images/modern-tarot/pen_plotter_josh_flees_modern_tarot.jpg)
 
