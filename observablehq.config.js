@@ -18,8 +18,9 @@ export default {
       pages: [
         {name: "Healthcare data of 1.2M people", path: "/synthetic-healthcare-data"},
         {name: "850k properties in New York real estate", path: "/new-york-real-estate"},
-        {name: "American Community Survey data from 15M+ people", path: "/american-community-survey/"},
-        {name: "American Community Survey historical data from 38M+ people", path: "/american-community-survey/income"}
+        {name: "American Community Survey data from 2022", path: "/american-community-survey/"},
+        {name: "American Community Survey historical data from 38M+ people", path: "/american-community-survey/income"},
+        {name: "American Community Survey historical data from NYC, 15M+ people", path: "/american-community-survey/new-york-area"}
       ]
     },
     {
