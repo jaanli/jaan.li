@@ -4,7 +4,7 @@ toc: false
 
 ```js
 import {DuckDBClient} from "npm:@observablehq/duckdb";
-const db = DuckDBClient.of({data: FileAttachment("data/income-histogram-historical-new-york-area-by-race.parquet")});
+const db = DuckDBClient.of({data: FileAttachment("../data/income-histogram-historical-new-york-area-by-race.parquet")});
 ```
 
 ```js
