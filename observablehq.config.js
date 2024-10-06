@@ -14,6 +14,12 @@ export default {
       ]
     },
     {
+      name: "Visualizations",
+      pages: [
+        {name: "Healthcare data 1.2M people", path: "/synthetic-healthcare-data"}
+      ]
+    },
+    {
       name: "Art",
       pages: [
         {name: "Modern Tarot", path: "/modern-tarot"}
