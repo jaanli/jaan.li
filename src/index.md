@@ -42,8 +42,8 @@
 
 <div class="hero">
   <h1>About Jaan</h1>
-  <h2>I am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
-  <a href="https://jaan.io">The old site with all the SEO juice<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
+  <h2>I am looking for a position in AI/data interaction engineering; I recently decided to return to industry from my faculty position where I taught courses at Princeton University and University of Tartu. I am &nbsp;<code style="font-size: 90%;">editing this page</code> to change over from my old website.</h2>
+  <a href="https://jaan.io">My previous portfolio website for reference, with several blog posts<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
 ```js
