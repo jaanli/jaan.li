@@ -4,11 +4,32 @@ toc: false
 
 ```js
 import {DuckDBClient} from "npm:@observablehq/duckdb";
-const db = DuckDBClient.of({data: FileAttachment("../data/income-histogram-historical-new-york-area-by-race.parquet")});
+const db = DuckDBClient.of({data: FileAttachment("data/income-histogram-historical-new-york-area-by-race.parquet")});
 ```
 
+
 ```js
-const uniqueYears = await db.query("SELECT DISTINCT year FROM data WHERE year BETWEEN 2005 AND 2022 ORDER BY year").then(data => data.map(d => d.year));
+// const uniqueYears = await db.query("SELECT DISTINCT year FROM data WHERE year BETWEEN 2005 AND 2022 ORDER BY year").then(data => data.map(d => d.year));
+
+const uniqueYears = await db.query("SELECT DISTINCT year FROM data ORDER BY year")
+  .then(result => {
+    console.log('Query result:', result);
+    if (!result.batches || !result.batches[0] || !result.batches[0].data) {
+      console.error('Unexpected result structure:', result);
+      return [];
+    }
+    const yearColumn = result.batches[0].data.children[0].values;
+    if (!(yearColumn instanceof Int32Array)) {
+      console.error('Year column is not an Int32Array:', yearColumn);
+      return [];
+    }
+    return Array.from(yearColumn); // Convert Int32Array to regular array
+  })
+  .catch(error => {
+    console.error('Query error:', error);
+    return [];
+  });
+
 const yearRange = [uniqueYears[0], uniqueYears[uniqueYears.length - 1]];
 const yearInput = Inputs.range(yearRange, {
   step: 1,
@@ -32,14 +53,53 @@ const stateCodeToName = {
 };
 
 // Fetch PUMA details, including state names based on the hardcoded map
+// const pumaDetails = await db.query(`
+//   SELECT DISTINCT puma, puma_name, state_code
+//   FROM data
+// `).then(data => data.map(d => ({
+//   puma: d.puma,
+//   stateCode: d.state_code,
+//   label: `${stateCodeToName[d.state_code]} - ${d.puma_name.replace("PUMA", "").trim()}`
+// })));
+
+// console.log("PUMA Details:", pumaDetails);
+
+// // Sort pumaDetails alphabetically by state name and then by PUMA name
+// pumaDetails.sort((a, b) => {
+//   const stateCompare = stateCodeToName[a.stateCode].localeCompare(stateCodeToName[b.stateCode]);
+//   if (stateCompare !== 0) return stateCompare;
+//   return a.label.localeCompare(b.label);
+// });
+
 const pumaDetails = await db.query(`
   SELECT DISTINCT puma, puma_name, state_code
   FROM data
-`).then(data => data.map(d => ({
-  puma: d.puma,
-  stateCode: d.state_code,
-  label: `${stateCodeToName[d.state_code]} - ${d.puma_name.replace("PUMA", "").trim()}`
-})));
+`).then(result => {
+  console.log('PUMA query result:', result);
+  if (!result.batches || !result.batches[0] || !result.batches[0].data) {
+    console.error('Unexpected PUMA result structure:', result);
+    return [];
+  }
+  const data = result.batches[0].data;
+  const pumaColumn = data.children[0];
+  const pumaNameColumn = data.children[1];
+  const stateCodeColumn = data.children[2];
+  
+  return Array.from({length: data.length}, (_, i) => {
+    const puma = String.fromCharCode(...pumaColumn.values.slice(pumaColumn.valueOffsets[i], pumaColumn.valueOffsets[i+1]));
+    const pumaName = String.fromCharCode(...pumaNameColumn.values.slice(pumaNameColumn.valueOffsets[i], pumaNameColumn.valueOffsets[i+1]));
+    const stateCode = String.fromCharCode(...stateCodeColumn.values.slice(stateCodeColumn.valueOffsets[i], stateCodeColumn.valueOffsets[i+1]));
+    
+    return {
+      puma: puma,
+      stateCode: stateCode,
+      label: `${stateCodeToName[stateCode]} - ${pumaName.replace("PUMA", "").trim()}`
+    };
+  });
+}).catch(error => {
+  console.error('PUMA query error:', error);
+  return [];
+});
 
 console.log("PUMA Details:", pumaDetails);
 
