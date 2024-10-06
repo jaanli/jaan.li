@@ -1,3 +1,7 @@
+---
+title: Wanna Sauna
+---
+
 <style>
 
 .hero {
@@ -46,7 +50,13 @@
   <a href="https://saunalist.org">saunalist.org has global sauna listings too!<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
-Saunas have financial returns and non-financial returns.
+![Wanna Sauna](/images/wanna-sauna/wanna_sauna_assembling_a_500_dollar_sauna.webp)
+
+Saunas have financial returns and non-financial returns. They also cost variable amounts of money.
+
+In the above video, you can see my friend Jeff and I assembling the first sauna I bought. It sat 3 people, lasted for several years, hundreds of friends used it; it cost $500 off eBay. Jeff and I had a wake-up call during the pandemic where we realized we had spent thousands of dollars at the Russian Turkish Bathhouse in New York, which can cost upwards of $50 per visit. We decided to buy a sauna instead. 
+
+The non-financial returns have been immense, which is why I decided to document a framework for visualizing and thinking about the "capital stacks", or the stack of capital investments that can be made in saunas, from personal saunas to public saunas to workplace saunas to commercial (for-profit) saunas.
 
 The non-financial returns of saunas include:
 
