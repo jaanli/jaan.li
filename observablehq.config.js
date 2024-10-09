@@ -14,6 +14,12 @@ export default {
       ]
     },
     {
+      name: "Machine Learning",
+      pages: [
+        {name: "Projects", path: "/projects"}
+      ]
+    },
+    {
       name: "Visualizations ",
       pages: [
         {name: "Healthcare data of 1.2M people", path: "/synthetic-healthcare-data"},

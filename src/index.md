@@ -46,6 +46,16 @@
   <a href="https://jaan.io">My previous portfolio website for reference, with several blog posts<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
 </div>
 
+My CV: [jaan.io/cv](https://jaan.io/cv)
+
+Built with love and the support of my wife in the City of New York. 
+
+<!-- <a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a>   -->
+
+Subscribe to my newsletter for updates on my work and writing by emailing <a href="mailto:subscribe@jaan.li">subscribe@jaan.li</a> (contents can be anything, especially things you are interested in :).
+
+You can also follow me on Twitter at <a href="https://x.com/thejaan">@thejaan</a> and on Instagram at <a href="https://instagram.com/big.baby.energy">@big.baby.energy</a>.
+
 ```js
 import {narrativeMap, narrativeMapLegend} from "./components/narrativeMap.js";
 ```
@@ -187,11 +197,4 @@ const narrativeDataChange = d3.rollup(
   </div>
 </div>
 
-Built with love and the support of my wife in the City of New York. 
-
-<!-- <a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a>   -->
-
-Subscribe to my newsletter for updates on my work and writing by emailing <a href="mailto:subscribe@jaan.li">subscribe@jaan.li</a> (contents can be anything, especially things you are interested in :).
-
-You can also follow me on Twitter at <a href="https://x.com/thejaan">@thejaan</a> and on Instagram at <a href="https://instagram.com/big.baby.energy">@big.baby.energy</a>.
 
