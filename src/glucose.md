@@ -63,7 +63,7 @@ vg.plot(
   vg.toggleY({as: $highlight}),
   vg.highlight({by: $highlight}),
   vg.colorDomain(vg.Fixed),
-  vg.xLabel("Routes by Total Requests"),
+  vg.xLabel("Hospitalization Major Diagnostic Category Counts"),
   vg.xTickFormat("s"),
   vg.yLabel(null),
   vg.width(1063),
