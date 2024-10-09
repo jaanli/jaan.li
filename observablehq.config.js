@@ -24,6 +24,7 @@ export default {
       pages: [
         {name: "Healthcare data of 1.2M people", path: "/synthetic-healthcare-data"},
         {name: "850k properties in New York real estate", path: "/new-york-real-estate"},
+        {name: "Glucose levels of 150k people over time", path: "/glucose"},
         {name: "American Community Survey data from 2022", path: "/american-community-survey/"},
         {name: "Community Survey historical data from 38M+ people", path: "/american-community-survey/income"},
         {name: "Community Survey historical data from NYC, 15M+ people, by sector", path: "/american-community-survey/new-york-area"},
