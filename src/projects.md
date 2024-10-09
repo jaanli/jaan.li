@@ -60,7 +60,7 @@ Paper: https://arxiv.org/abs/1904.05342 (900+ [citations](https://scholar.google
 
 <img src="images/payless.health-linknyc-campaign.jpg" alt="drawing" style="width:200px;"/>
 
-I raised $350,000+ to build a non-profit foundation. We received an initial [grant](https://brown.columbia.edu/22-23-magic/) for 2022--2023 from Columbia University and Stanford Univeristy, and raised $100,000+ in the New York City Five Boro Bike Tour. Using these funds, I led a team that collected the prices from 4,000+ hospitals nationwide and built Payless Health. Further, for our first contract, I trained a resource allocator team that manages $1B AUM in the New York area, who used our open source tools such as ClinicalBERT and hospital prices to select their next insurance policy, saving upwards of $25M in premiums per year.
+I raised $350,000+ to build a non-profit foundation. We received an initial [grant](https://brown.columbia.edu/22-23-magic/) for 2022--2023 from Columbia University and Stanford Univeristy, and raised $100,000+ in the New York City Five Boro Bike Tour. Using these funds, I led a team that collected the prices from 4,000+ hospitals nationwide and built Payless Health. Further, for our first contract, I trained a resource allocator team that manages $1B AUM in the New York area, who used our open source tools such as ClinicalBERT and hospital prices to select their next insurance policy, saving upwards of $25M in premiums per year. We also ran the above on-the-ground advertising campaign in New York City to advertise price disparity in cesarean sections found using our data.
 
 Websites: [payless.health](https://www.payless.health/) (hospital prices) & [onefact.org](https://www.onefact.org/) (foundation)
 
