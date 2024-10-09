@@ -8,7 +8,7 @@ sql:
   glucose_full: data/glucose_full.parquet
 ---
 
-# Glucose levels across 300k hospitalizations of 150k people
+# Millions of glucose levels across 300k hospitalizations of 150k people
 
 ```js
 const $filter = vg.Selection.crossfilter();
