@@ -1,5 +1,5 @@
 ---
-title: Observable Web Latency
+title: Millions of glucose levels
 header: |
   <div class="banner">
     <a target="_blank" href="https://github.com/jaanli/jaan.li/blob/main/src/glucose.md"><span>View source ↗</span></a>
