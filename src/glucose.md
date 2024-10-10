@@ -2,7 +2,7 @@
 title: Observable Web Latency
 header: |
   <div class="banner">
-    <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/observable-latency.md?plain=1"><span>View source ↗</span></a>
+    <a target="_blank" href="https://github.com/jaanli/jaan.li/blob/main/src/glucose.md"><span>View source ↗</span></a>
   </div>
 sql:
   glucose_full: data/glucose_full.parquet
