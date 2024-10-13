@@ -11,6 +11,7 @@ export default {
       name: "Articles",
       pages: [
         {name: "Wanna Sauna?", path: "/wanna-sauna"},
+        {name: "Longform Adaptations", path: "/longform-adaptations"},
       ]
     },
     {
