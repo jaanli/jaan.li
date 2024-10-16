@@ -49,7 +49,7 @@ toc: false
   <h2>Welcome to interactive visualizations of New York City real estate data! The code and data used to generate these data are public and free to reuse :)
 </div>
 
-See the full version at: https://onefact.github.io/new-york-real-estate/
+See the full version at: https://jaanli.github.io/new-york-real-estate/
 
 ```js
 const center = [40.7,-74];
