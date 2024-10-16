@@ -54,7 +54,7 @@ Built with love and the support of my wife in the City of New York.
 
 Subscribe to my newsletter for updates on my work and writing by emailing <a href="mailto:subscribe@jaan.li">subscribe@jaan.li</a> (contents can be anything, especially things you are interested in :).
 
-You can also follow me on Twitter at <a href="https://x.com/thejaan">@thejaan</a> and on Instagram at <a href="https://instagram.com/big.baby.energy">@big.baby.energy</a>.
+You can also follow me on Twitter at <a href="https://x.com/thejaan">@thejaan</a>.
 
 ```js
 import {narrativeMap, narrativeMapLegend} from "./components/narrativeMap.js";
