@@ -83,7 +83,7 @@ jobs:
           # Specify the path to your build directory
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
         if: github.ref == 'refs/heads/main'
       # - uses: cloudflare/pages-action@1
       #   with:
