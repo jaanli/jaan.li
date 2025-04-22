@@ -48,7 +48,7 @@
 
 My CV: [jaan.io/cv](https://jaan.io/cv)
 
-Built with love and the support of my wife in the City of New York. 
+Built with love in the City of New York. 
 
 <!-- <a rel="me" href="https://sigmoid.social/@jaan">Mastodon</a>   -->
 
